@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from backend.services.auth_service import confirm_auth, start_auth
+from services.auth_service import confirm_auth, start_auth
 from data.database import get_db
 from dto.auth_dto import AuthConfirm
 
