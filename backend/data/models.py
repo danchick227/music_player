@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from sqlalchemy import String
+from sqlalchemy import DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 
 
-from .database import Base
+from backend.data.database import Base
 
 class User(Base):
     __tablename__ = 'users'
@@ -15,9 +15,19 @@ class User(Base):
     username: Mapped[str | None] = mapped_column(String(100))
 
 class AuthSession(Base):
-    __tablename__ = 'auth_sessions'
+    __tablename__ = "auth_sessions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    token: Mapped[str] = mapped_column(String(64), unique=True)
+
+    token: Mapped[str] = mapped_column(
+        String(64),
+        unique=True,
+        nullable=False,
+    )
+
     telegram_id: Mapped[int | None]
-    expires_at: Mapped[datetime]
+
+    expires_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        nullable=False,
+    )
