@@ -2,9 +2,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from services.auth_service import confirm_auth, start_auth
-from data.database import get_db
-from dto.auth_dto import AuthConfirm
+from backend.services.auth_service import confirm_auth, start_auth
+from backend.data.database import get_db
+from backend.dto.auth_dto import AuthConfirm
 
 router = APIRouter()
 

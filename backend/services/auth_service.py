@@ -1,10 +1,11 @@
 import secrets
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from fastapi import HTTPException
-from data.models import AuthSession, User
-from dto.auth_dto import AuthConfirm
+from backend.data.models import AuthSession, User
+from backend.dto.auth_dto import AuthConfirm
+from backend.utils.datetime import utc_now_naive
 
 
 def start_auth(db: Session):
@@ -12,7 +13,7 @@ def start_auth(db: Session):
 
     session = AuthSession(
         token=token,
-        expires_at=datetime.now(timezone.utc) + timedelta(minutes=5)
+        expires_at = utc_now_naive() + timedelta(minutes=5)
     )
 
     db.add(session)
@@ -31,10 +32,10 @@ def confirm_auth(dto: AuthConfirm, db: Session):
             detail='Auth session not found'
         )
     
-    if auth_session.expires_at < datetime.now(timezone.utc):
+    if auth_session.expires_at < utc_now_naive():
         raise HTTPException(
             status_code=400,
-            detail='Auth session expired'
+            detail="Auth session expired"
         )
 
     auth_session.telegram_id = dto.telegram_id
