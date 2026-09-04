@@ -1,1 +1,17 @@
+запускать из корня
+
+команды:
+
+bot:
+
+```bash
+python -m bot.main
+```
+
+backend:
+
+```bash
+uvicorn backend.main:app --reload
+```
+
 тестик
